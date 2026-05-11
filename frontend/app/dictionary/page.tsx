@@ -11,6 +11,9 @@ export default function DictionaryPage() {
     "3": "Tolong",
     "4": "Ya",
     "5": "Tidak",
+    "6": "Pintar",
+    "7": "Saya",
+    "8": "Kamu",
   };
 
   const result = dictionary[query];
@@ -30,14 +33,14 @@ export default function DictionaryPage() {
         />
 
         <div className="mt-4">
-            <h2 className="font-semibold mb-2">Daftar Gesture</h2>
-            <ul className="text-sm space-y-1">
-                {Object.entries(dictionary).map(([key, value]) => (
-                <li key={key}>
-                    {key} → {value}
-                </li>
-                ))}
-            </ul>
+          <h2 className="font-semibold mb-2">Daftar Gesture</h2>
+          <ul className="text-sm space-y-1">
+            {Object.entries(dictionary).map(([key, value]) => (
+              <li key={key}>
+                {key} → {value}
+              </li>
+            ))}
+          </ul>
         </div>
 
         {result ? (
