@@ -29,3 +29,8 @@ app.add_middleware(
 # Routers
 app.include_router(translate.router, prefix="/translate", tags=["Translate"])
 app.include_router(gesture.router, prefix="/gesture", tags=["Gesture"])
+
+@app.get("/", tags=["Health"])
+def root():
+    """Health check endpoint for Render/Cloud deployment."""
+    return {"status": "ok", "message": "Sapa Isyarat Backend is running"}
