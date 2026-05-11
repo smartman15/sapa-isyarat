@@ -68,7 +68,7 @@ def ensure_model() -> Path:
     return MODEL_PATH
 
 
-def create_landmarker(confidence: float = 0.1) -> mp_vision.HandLandmarker:
+def create_landmarker(confidence: float = 0.5) -> mp_vision.HandLandmarker:
     """Create a HandLandmarker configured for static image processing.
 
     Args:
