@@ -44,11 +44,11 @@ export default function ProfilePage() {
               textSize === "small"
                 ? "text-sm"
                 : textSize === "large"
-                ? "text-xl"
-                : "text-base"
+                  ? "text-xl"
+                  : "text-base"
             }
           >
-            Preview teks
+            SIBI/BISINDO translator
           </p>
         </div>
       </div>
