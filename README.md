@@ -50,12 +50,12 @@ Navigate to the backend directory and set up the Python environment:
 ```powershell
 cd backend
 
-# Create and activate virtual environment (Windows)
-python -m venv venv
+# Create virtual environment explicitly using Python 3.13 to avoid version conflicts
+py -3.13 -m venv venv
 .\venv\Scripts\Activate.ps1
 
-# Install dependencies
-pip install -r requirements.txt
+# Install dependencies safely via the venv's python executable
+.\venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
 > **Note:** If PowerShell blocks script execution, run: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
@@ -63,7 +63,7 @@ pip install -r requirements.txt
 Start the FastAPI server:
 
 ```powershell
-uvicorn main:app --reload --port 8000
+.\venv\Scripts\python.exe -m uvicorn main:app --reload --port 8000
 ```
 
 ### 2. Frontend Setup (Terminal 2)
@@ -104,10 +104,12 @@ Dataset_Folder/
 Run the extraction script on your dataset. This uses MediaPipe to find hand skeletons in the static images and saves their normalized coordinates to a CSV file.
 
 ```powershell
-# Make sure your virtual environment is activated
+# Ensure you are in the backend directory
 cd backend
 
-python scripts/extract_landmarks.py --input "C:\path\to\your\Dataset_Folder" --output data/my_landmarks.csv
+# Always run scripts using the explicit venv executable
+# Note: Name your output file according to your dataset (e.g., sibi_landmarks.csv)
+.\venv\Scripts\python.exe scripts/extract_landmarks.py --input "C:\path\to\your\Dataset_Folder" --output data/sibi_landmarks.csv
 ```
 
 **Options:**
@@ -118,9 +120,10 @@ python scripts/extract_landmarks.py --input "C:\path\to\your\Dataset_Folder" --o
 Train the Random Forest model on the generated CSV file.
 
 ```powershell
-python scripts/train_model.py --mode bisindo --dataset data/my_landmarks.csv
+# Ensure the --dataset path points EXACTLY to the file generated in Step 1
+.\venv\Scripts\python.exe scripts/train_model.py --mode sibi --dataset data/sibi_landmarks.csv
 ```
-*(Replace `--mode bisindo` with `--mode sibi` if training SIBI)*
+*(Replace `--mode sibi` with `--mode bisindo` if training BISINDO)*
 
 The script will evaluate the model, output a precision/recall report, and automatically save the trained model to `backend/app/ai/models/`.
 
