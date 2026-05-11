@@ -4,7 +4,7 @@ import { useRef, useState, useCallback } from "react";
 import { useHandDetection, LandmarkPoint } from "@/hooks/useHandDetection";
 import { useGestureBuffer } from "@/hooks/useGestureBuffer";
 
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
 const CONFIDENCE_THRESHOLD = 0.5;
 const FETCH_INTERVAL_MS = 100; // throttle to ~10 req/sec
 
