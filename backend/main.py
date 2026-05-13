@@ -17,13 +17,23 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-# CORS — required for Next.js frontend
+# CORS — required for Vercel frontend calling this Render backend.
+# vercel-deployment skill: allow_origins=["*"] + allow_credentials=True is
+# invalid per the CORS spec and silently rejected by all browsers.
+# Use an explicit origin list instead.
+import os
+
+ALLOWED_ORIGINS = os.getenv(
+    "ALLOWED_ORIGINS",
+    "https://sapa-isyarat.vercel.app,http://localhost:3000"
+).split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=False,   # No cookies/auth headers used — keep False
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type"],
 )
 
 # Routers
