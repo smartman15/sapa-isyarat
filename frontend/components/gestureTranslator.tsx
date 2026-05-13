@@ -85,7 +85,10 @@ export default function GestureTranslator() {
     [mode, pushLabel]
   );
 
-  useHandDetection(videoRef, canvasRef, { onLandmarks: handleLandmarks });
+  useHandDetection(videoRef, canvasRef, {
+    onLandmarks: handleLandmarks,
+    onStatusChange: setStatus,
+  });
 
   const handleModeChange = (newMode: Mode) => {
     setMode(newMode);

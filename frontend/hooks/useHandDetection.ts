@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { Results, NormalizedLandmark } from "@mediapipe/hands";
 
 export type LandmarkPoint = {
   x: number;
@@ -11,25 +10,32 @@ export type LandmarkPoint = {
 
 type UseHandDetectionOptions = {
   onLandmarks: (hands: LandmarkPoint[][]) => void;
+  onStatusChange?: (status: string) => void;
 };
 
 /**
- * Initializes MediaPipe Hands, opens the webcam, and calls onLandmarks
- * on every frame where at least one hand is detected.
+ * Initializes MediaPipe HandLandmarker (Tasks Vision API), opens the webcam,
+ * and calls onLandmarks on every frame where at least one hand is detected.
  *
- * Loads MediaPipe WASM files from CDN to avoid Next.js bundling issues.
- * Cleans up camera stream and animation loop on unmount.
+ * Uses the modern @mediapipe/tasks-vision package loaded from CDN to avoid
+ * Next.js bundling/SSR issues. Cleans up camera stream on unmount.
+ *
+ * react-patterns: callback stored in ref to prevent effect restart on re-render.
  */
 export function useHandDetection(
   videoRef: React.RefObject<HTMLVideoElement | null>,
   canvasRef: React.RefObject<HTMLCanvasElement | null>,
-  { onLandmarks }: UseHandDetectionOptions
+  { onLandmarks, onStatusChange }: UseHandDetectionOptions
 ) {
-  // Store callback in a ref so the effect doesn't restart when it changes
+  // Store callbacks in refs so the effect never needs to re-run on callback changes
   const onLandmarksRef = useRef(onLandmarks);
+  const onStatusChangeRef = useRef(onStatusChange);
   useEffect(() => {
     onLandmarksRef.current = onLandmarks;
   }, [onLandmarks]);
+  useEffect(() => {
+    onStatusChangeRef.current = onStatusChange;
+  }, [onStatusChange]);
 
   useEffect(() => {
     let active = true;
@@ -41,73 +47,100 @@ export function useHandDetection(
       const canvas = canvasRef.current;
       if (!video || !canvas) return;
 
-      // Dynamic import — MediaPipe uses browser APIs not available in SSR
-      const { Hands } = await import("@mediapipe/hands");
-
-      const hands = new Hands({
-        locateFile: (file: string) =>
-          `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/${file}`,
-      });
-
-      hands.setOptions({
-        maxNumHands: 2,
-        modelComplexity: 1,
-        minDetectionConfidence: 0.7,
-        minTrackingConfidence: 0.5,
-      });
-
-      hands.onResults((results: Results) => {
-        if (!active) return;
-
-        const ctx = canvas.getContext("2d");
-        if (ctx) {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(results.image, 0, 0, canvas.width, canvas.height);
-
-          if (results.multiHandLandmarks) {
-            for (const landmarks of results.multiHandLandmarks) {
-              for (const point of landmarks) {
-                ctx.beginPath();
-                ctx.arc(
-                  point.x * canvas.width,
-                  point.y * canvas.height,
-                  4,
-                  0,
-                  2 * Math.PI
-                );
-                ctx.fillStyle = "#00FF00";
-                ctx.fill();
-              }
-            }
-          }
-        }
-
-        if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
-          const detected: LandmarkPoint[][] = results.multiHandLandmarks.map(
-            (hand: NormalizedLandmark[]) =>
-              hand.map((lm: NormalizedLandmark) => ({ x: lm.x, y: lm.y, z: lm.z }))
-          );
-          onLandmarksRef.current(detected);
-        }
-      });
-
       try {
+        onStatusChangeRef.current?.("Loading hand detection model...");
+
+        // Dynamic import of the modern Tasks Vision API from CDN
+        // This avoids Next.js SSR bundling issues with WASM
+        const vision = await import(
+          // @ts-ignore — CDN import not typed
+          "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/vision_bundle.js"
+        );
+
+        const { HandLandmarker, FilesetResolver } = vision;
+
+        const filesetResolver = await FilesetResolver.forVisionTasks(
+          "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
+        );
+
+        const handLandmarker = await HandLandmarker.createFromOptions(
+          filesetResolver,
+          {
+            baseOptions: {
+              modelAssetPath:
+                "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task",
+              delegate: "GPU",
+            },
+            runningMode: "VIDEO",
+            numHands: 2,
+            minHandDetectionConfidence: 0.5,
+            minHandPresenceConfidence: 0.5,
+            minTrackingConfidence: 0.5,
+          }
+        );
+
+        onStatusChangeRef.current?.("Requesting camera access...");
+
         stream = await navigator.mediaDevices.getUserMedia({
           video: { width: 640, height: 480, facingMode: "user" },
         });
         video.srcObject = stream;
         await video.play();
 
-        const processFrame = async () => {
+        onStatusChangeRef.current?.("Camera ready — detecting gestures...");
+
+        const ctx = canvas.getContext("2d");
+
+        const processFrame = () => {
           if (!active) return;
+
           if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-            await hands.send({ image: video });
+            const nowMs = performance.now();
+            const results = handLandmarker.detectForVideo(video, nowMs);
+
+            // Draw camera feed to canvas
+            if (ctx) {
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+              // Draw landmark dots
+              if (results.landmarks) {
+                for (const hand of results.landmarks) {
+                  for (const point of hand) {
+                    ctx.beginPath();
+                    ctx.arc(
+                      point.x * canvas.width,
+                      point.y * canvas.height,
+                      4,
+                      0,
+                      2 * Math.PI
+                    );
+                    ctx.fillStyle = "#00FF00";
+                    ctx.fill();
+                  }
+                }
+              }
+            }
+
+            // Fire callback only when hands are detected
+            if (results.landmarks && results.landmarks.length > 0) {
+              const detected: LandmarkPoint[][] = results.landmarks.map(
+                (hand: Array<{ x: number; y: number; z: number }>) =>
+                  hand.map((lm) => ({ x: lm.x, y: lm.y, z: lm.z }))
+              );
+              onLandmarksRef.current(detected);
+            }
           }
+
           animFrameId = requestAnimationFrame(processFrame);
         };
+
         animFrameId = requestAnimationFrame(processFrame);
       } catch (err) {
-        console.error("Camera access error:", err);
+        console.error("Hand detection init error:", err);
+        onStatusChangeRef.current?.(
+          `⚠️ Camera or model error: ${err instanceof Error ? err.message : String(err)}`
+        );
       }
     }
 
