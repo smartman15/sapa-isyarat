@@ -17,17 +17,16 @@ type UseHandDetectionOptions = {
  * Initializes MediaPipe HandLandmarker (Tasks Vision API), opens the webcam,
  * and calls onLandmarks on every frame where at least one hand is detected.
  *
- * Uses the modern @mediapipe/tasks-vision package loaded from CDN to avoid
- * Next.js bundling/SSR issues. Cleans up camera stream on unmount.
- *
- * react-patterns: callback stored in ref to prevent effect restart on re-render.
+ * react-patterns: callbacks stored in refs so the effect never restarts.
+ * debugger finding: Turbopack blocks import("https://...") — must use npm package.
+ * Uses @mediapipe/tasks-vision npm package; WASM assets served from CDN.
  */
 export function useHandDetection(
   videoRef: React.RefObject<HTMLVideoElement | null>,
   canvasRef: React.RefObject<HTMLCanvasElement | null>,
   { onLandmarks, onStatusChange }: UseHandDetectionOptions
 ) {
-  // Store callbacks in refs so the effect never needs to re-run on callback changes
+  // react-patterns: store callbacks in refs to avoid restarting the effect
   const onLandmarksRef = useRef(onLandmarks);
   const onStatusChangeRef = useRef(onStatusChange);
   useEffect(() => {
@@ -50,15 +49,13 @@ export function useHandDetection(
       try {
         onStatusChangeRef.current?.("Loading hand detection model...");
 
-        // Dynamic import of the modern Tasks Vision API from CDN
-        // This avoids Next.js SSR bundling issues with WASM
-        const vision = await import(
-          // @ts-ignore — CDN import not typed
-          "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/vision_bundle.js"
+        // react-patterns: dynamic import of npm package (NOT a URL).
+        // Turbopack/Webpack support package-name imports, not https:// URLs.
+        const { HandLandmarker, FilesetResolver } = await import(
+          "@mediapipe/tasks-vision"
         );
 
-        const { HandLandmarker, FilesetResolver } = vision;
-
+        // WASM binary assets are served from CDN — this is the supported approach
         const filesetResolver = await FilesetResolver.forVisionTasks(
           "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
         );
@@ -103,7 +100,7 @@ export function useHandDetection(
               ctx.clearRect(0, 0, canvas.width, canvas.height);
               ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-              // Draw landmark dots
+              // Draw green landmark dots on detected hands
               if (results.landmarks) {
                 for (const hand of results.landmarks) {
                   for (const point of hand) {
@@ -122,7 +119,7 @@ export function useHandDetection(
               }
             }
 
-            // Fire callback only when hands are detected
+            // Fire callback only when hands are present in frame
             if (results.landmarks && results.landmarks.length > 0) {
               const detected: LandmarkPoint[][] = results.landmarks.map(
                 (hand: Array<{ x: number; y: number; z: number }>) =>
@@ -146,6 +143,7 @@ export function useHandDetection(
 
     init();
 
+    // Cleanup: stop animation loop and release camera on unmount
     return () => {
       active = false;
       cancelAnimationFrame(animFrameId);
