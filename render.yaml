@@ -1,19 +1,14 @@
-# render-automation skill: render.yaml MUST live at the repo root.
-# Render reads this file first before doing anything else.
-#
-# docker-expert skill: dockerContext points to the build context directory.
-# dockerfilePath is relative to the repo root, NOT relative to this file.
+# render-automation skill: render.yaml at repo root.
+# docker-expert skill: context is repo root; Dockerfile also at root.
+# COPY commands inside Dockerfile reference backend/ explicitly.
 
 services:
   - type: web
     name: sapa-isyarat-backend
     env: docker
     plan: free
-    # Build context is the backend/ folder — all COPY commands in Dockerfile
-    # are relative to this directory.
-    dockerContext: ./backend
-    # Explicit path to Dockerfile, relative to repo root.
-    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    dockerfilePath: ./Dockerfile
     healthCheckPath: /
     envVars:
       - key: PORT
