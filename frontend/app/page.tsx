@@ -1,9 +1,9 @@
-import GestureTranslator from "@/components/gestureTranslator";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return (
-    <main className="p-6">
-      <GestureTranslator />
-    </main>
-  );
+/**
+ * Root route — redirects to the onboarding flow.
+ * The original GestureTranslator is accessible at /sign-camera.
+ */
+export default function RootPage() {
+  redirect("/onboarding");
 }
