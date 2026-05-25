@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import {
   Home, MessageCircle, BookOpen, User, Camera, Mic, MessageSquare,
   Zap, Search, HandMetal, Heart, Bell, History, TrendingUp,
-  AlertTriangle, Flame, Star,
+  AlertTriangle, Star,
 } from "lucide-react";
 import Mascot from "@/components/Mascot";
 
@@ -134,34 +134,6 @@ function WordOfDayCard({ onNavigate }: { onNavigate: (s: string) => void }) {
   );
 }
 
-/* ─── Streak widget ─────────────────────────────────────────────── */
-function StreakWidget({ onNavigate }: { onNavigate: (s: string) => void }) {
-  return (
-    <button
-      onClick={() => onNavigate("learning-progress")}
-      className="w-full mb-2.5 bg-white border border-[#E8E6E0] rounded-[16px] p-3 flex items-center gap-3 relative overflow-hidden"
-    >
-      <div className="absolute -right-6 -top-6 w-20 h-20 rounded-full bg-[#F4A07A] opacity-[0.06] pointer-events-none" />
-      <div className="w-10 h-10 bg-gradient-to-br from-[#FF6B35] to-[#F4A07A] rounded-[12px] flex items-center justify-center flex-shrink-0 shadow-sm shadow-[#F4A07A]/30">
-        <Flame size={20} className="text-white" fill="white" />
-      </div>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center justify-between mb-1">
-          <div className="flex items-center gap-1">
-            <Flame size={12} className="text-[#FF6B35]" fill="#FF6B35"/>
-            <span className="text-[12px] font-semibold text-[#1B1F3B]">12 hari berturut-turut</span>
-          </div>
-          <span className="text-[11px] text-[#6B7194]">240 XP</span>
-        </div>
-        <div className="h-1.5 bg-[#EEF0F6] rounded-full overflow-hidden">
-          <div className="h-full w-[60%] bg-gradient-to-r from-[#F4A07A] to-[#FF6B35] rounded-full" />
-        </div>
-        <div className="text-[10px] text-[#6B7194] mt-0.5">Level 4 · 160 XP lagi ke Level 5</div>
-      </div>
-      <div className="text-[#C8C5BE] text-sm">→</div>
-    </button>
-  );
-}
 
 /* ─── Main Page ──────────────────────────────────────────────────── */
 export default function HomePage() {
@@ -200,7 +172,7 @@ export default function HomePage() {
         </div>
 
         {/* Greeting */}
-        <div className="relative z-10 mb-3.5 flex items-end justify-between">
+        <div className="relative z-10 mb-3.5 flex items-start justify-between">
           <div className="flex-1">
             <div className="flex items-center gap-1 mb-0.5">
               <p className="text-[11px] text-white/45">Selamat pagi</p>
@@ -209,51 +181,47 @@ export default function HomePage() {
                 <path d="M12 1v3M12 20v3M22 12h-3M5 12H2M19.07 4.93l-2.12 2.12M7.05 16.95l-2.12 2.12M19.07 19.07l-2.12-2.12M7.05 7.05L4.93 4.93" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
               </svg>
             </div>
-            <h1 className="text-[20px] font-bold text-white leading-none mb-0.5" style={{ letterSpacing: "-0.4px" }}>
+            <h1 className="text-[20px] font-bold text-white leading-none" style={{ letterSpacing: "-0.4px" }}>
               Hai, Dira!
             </h1>
-            <div className="flex items-center gap-1">
-              <Flame size={11} className="text-[#FF6B35]" fill="#FF6B35"/>
-              <p className="text-[11px] text-white/40">12 hari streak · Level 4</p>
-            </div>
           </div>
 
-          <div className="flex flex-col items-end gap-1.5">
-            <div className="flex gap-2 mb-1">
-              <button
-                onClick={() => onNavigate("favorites")}
-                className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center backdrop-blur-sm"
-              >
-                <Heart size={15} className="text-white/70" />
-              </button>
-              <button
-                onClick={() => onNavigate("notifications")}
-                className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center backdrop-blur-sm relative"
-              >
-                <Bell size={15} className="text-white/70" />
-                <div className="absolute top-1 right-1 w-2 h-2 bg-[#F44336] rounded-full border border-[#1B1F3B]" />
-              </button>
-            </div>
-            <div className="-mb-7 mr-[-4px] relative z-20">
-              <Mascot size={70} mood="wave" />
-            </div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => onNavigate("favorites")}
+              className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center backdrop-blur-sm"
+            >
+              <Heart size={15} className="text-white/70" />
+            </button>
+            <button
+              onClick={() => onNavigate("notifications")}
+              className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center backdrop-blur-sm relative"
+            >
+              <Bell size={15} className="text-white/70" />
+              <div className="absolute top-1 right-1 w-2 h-2 bg-[#F44336] rounded-full border border-[#1B1F3B]" />
+            </button>
           </div>
         </div>
 
-        {/* Search bar */}
-        <button
-          onClick={() => onNavigate("search")}
-          className="w-full bg-white/10 rounded-xl px-3.5 py-2.5 flex items-center gap-2 relative z-10 backdrop-blur-sm"
-        >
-          <Search size={15} className="text-white/40" />
-          <span className="text-[13px] text-white/35">Cari kata isyarat...</span>
-        </button>
+        {/* Search bar — mascot peeks from bottom-right into the body */}
+        <div className="relative z-10">
+          <button
+            onClick={() => onNavigate("search")}
+            className="w-full bg-white/10 rounded-xl px-3.5 py-2.5 flex items-center gap-2 backdrop-blur-sm pr-20"
+          >
+            <Search size={15} className="text-white/40" />
+            <span className="text-[13px] text-white/35">Cari kata isyarat...</span>
+          </button>
+          {/* Mascot: bottom-right of header, negative margin pulls it down over body */}
+          <div className="absolute -bottom-10 right-1 z-20 pointer-events-none">
+            <Mascot size={76} mood="wave" />
+          </div>
+        </div>
       </div>
+
 
       {/* Body */}
       <div className="flex-1 overflow-y-auto px-4 pt-4 pb-24">
-        <StreakWidget onNavigate={onNavigate} />
-
         {/* Main feature card */}
         <div className="mb-2.5">
           <h3 className="text-[11px] font-semibold text-[#6B7194] uppercase tracking-wider mb-2.5">
