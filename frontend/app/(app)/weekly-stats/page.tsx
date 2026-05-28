@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Calendar, TrendingUp, Award, Clock, Flame, Target } from "lucide-react";
+import { ArrowLeft, Calendar, TrendingUp, Award, Clock, Flame, Target, Play } from "lucide-react";
 
 const WEEK = [
   { day:"Sen", date:"13 Mei", active:true,  completed:true,  xp:120, minutes:25 },
@@ -125,6 +125,22 @@ export default function WeeklyStatsPage() {
             <li className="flex items-start gap-2"><span className="text-[#F4A07A]">•</span><span>Hari paling produktif: Rabu (110 XP)</span></li>
             <li className="flex items-start gap-2"><span className="text-[#2196F3]">•</span><span>Tingkatkan 15% dari minggu lalu!</span></li>
           </ul>
+        </div>
+
+        {/* CTAs */}
+        <div className="mt-6 space-y-3">
+          <button
+            onClick={() => router.push("/practice")}
+            className="w-full bg-[#1B1F3B] text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-lg"
+          >
+            <Play size={20}/>Mulai Latihan Hari Ini
+          </button>
+          <button
+            onClick={() => router.push("/learning-progress")}
+            className="w-full bg-white border border-[#E8E6E0] text-[#1B1F3B] py-4 rounded-2xl font-semibold flex items-center justify-center gap-2"
+          >
+            <TrendingUp size={18}/>Lihat Progress Lengkap
+          </button>
         </div>
       </div>
     </div>

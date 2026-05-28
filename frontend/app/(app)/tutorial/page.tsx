@@ -220,7 +220,7 @@ export default function TutorialPage() {
             </button>
           )}
           <button
-            onClick={() => isLast ? router.back() : setStep(step + 1)}
+            onClick={() => isLast ? router.push("/home") : setStep(step + 1)}
             className={`py-[14px] rounded-[14px] font-semibold text-[13px] bg-[#1B1F3B] text-white shadow-md ${step > 0 ? "flex-1" : "w-full"}`}
           >
             {isLast

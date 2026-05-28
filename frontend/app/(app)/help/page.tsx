@@ -29,9 +29,12 @@ const TUTORIALS: Tutorial[] = [
 
 const CATS = ["Semua","Dasar","Fitur","Kamus","Aksesibilitas","Privasi"];
 
-function TutorialCard({ t }: { t: Tutorial }) {
+function TutorialCard({ t, onClick }: { t: Tutorial; onClick?: () => void }) {
   return (
-    <button className="w-full bg-white rounded-2xl p-4 flex items-center gap-3 shadow-sm border border-[#E8E6E0] hover:shadow-md transition-shadow">
+    <button
+      onClick={onClick}
+      className="w-full bg-white rounded-2xl p-4 flex items-center gap-3 shadow-sm border border-[#E8E6E0] hover:shadow-md transition-shadow"
+    >
       <div className="w-14 h-14 bg-gradient-to-br from-[#4A90E2] to-[#6CAEE4] rounded-xl flex items-center justify-center text-white flex-shrink-0">
         {t.icon}
       </div>
@@ -135,7 +138,15 @@ export default function HelpPage() {
         <div className="px-4 mb-6">
           <h3 className="font-semibold text-[#1B1F3B] mb-3">Tutorial Video</h3>
           <div className="space-y-2">
-            {TUTORIALS.map(t => <TutorialCard key={t.id} t={t}/>)}
+            {TUTORIALS.map(t => {
+              const DEST: Record<string, string> = {
+                "1": "/tutorial",
+                "2": "/sign-camera",
+                "3": "/conversation",
+                "4": "/dictionary",
+              };
+              return <TutorialCard key={t.id} t={t} onClick={() => router.push(DEST[t.id] ?? "/tutorial")} />;
+            })}
           </div>
         </div>
 

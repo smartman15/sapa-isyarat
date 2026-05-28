@@ -111,8 +111,15 @@ export default function SearchPage() {
             <div className="space-y-2">
               {results.map(r => {
                 const cfg = TYPE_CONFIG[r.type];
+                const dest = r.type === "category"
+                  ? `/quick-phrases/${r.category.toLowerCase()}`
+                  : `/dictionary/sapaan/${r.id}`;
                 return (
-                  <div key={r.id} className="bg-white rounded-2xl border border-[#E8E6E0] overflow-hidden">
+                  <button
+                    key={r.id}
+                    onClick={() => router.push(dest)}
+                    className="w-full bg-white rounded-2xl border border-[#E8E6E0] overflow-hidden text-left"
+                  >
                     <div className="flex items-center gap-3 p-4">
                       <div className={`w-14 h-14 ${cfg.bg} rounded-xl flex items-center justify-center text-2xl flex-shrink-0`}>
                         {r.emoji}
@@ -127,11 +134,14 @@ export default function SearchPage() {
                           <span className="text-[10px] text-[#9B9890]">• {cfg.label}</span>
                         </div>
                       </div>
-                      <button className="w-10 h-10 bg-[#F4A07A] rounded-xl flex items-center justify-center flex-shrink-0">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); router.push(dest); }}
+                        className="w-10 h-10 bg-[#F4A07A] rounded-xl flex items-center justify-center flex-shrink-0"
+                      >
                         {r.type === "category" ? <BookOpen size={18} className="text-white" /> : <Play size={18} className="text-white" />}
                       </button>
                     </div>
-                  </div>
+                  </button>
                 );
               })}
             </div>

@@ -90,7 +90,7 @@ export default function PracticeSessionPage() {
         </div>
 
         <button
-          onClick={() => router.back()}
+          onClick={() => router.push("/home")}
           className="w-full max-w-sm bg-[#F4A07A] text-white py-4 rounded-2xl font-bold text-lg shadow-2xl"
         >
           Kembali ke Beranda
