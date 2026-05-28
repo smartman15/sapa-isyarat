@@ -67,12 +67,15 @@ function QuickStat({ icon, value, label }: { icon: React.ReactNode; value: strin
   );
 }
 
-function AchievementCard({ a }: { a: Achievement }) {
+function AchievementCard({ a, onClick }: { a: Achievement; onClick?: () => void }) {
   return (
-    <div className={`rounded-2xl p-4 flex items-start gap-3 transition-all ${
-      a.unlocked ? "bg-gradient-to-br from-[#FDEEE6] to-[#F4F0E8] border-2 border-[#F4A07A] shadow-md"
-                 : "bg-white border border-[#E8E6E0]"
-    }`}>
+    <button
+      onClick={onClick}
+      className={`w-full rounded-2xl p-4 flex items-start gap-3 transition-all text-left ${
+        a.unlocked ? "bg-gradient-to-br from-[#FDEEE6] to-[#F4F0E8] border-2 border-[#F4A07A] shadow-md"
+                   : "bg-white border border-[#E8E6E0]"
+      }`}
+    >
       <div className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 ${a.unlocked ? "bg-white shadow-sm" : "bg-[#EEF0F6] grayscale opacity-60"}`}>
         {a.icon}
       </div>
@@ -96,12 +99,12 @@ function AchievementCard({ a }: { a: Achievement }) {
           </div>
         )}
       </div>
-    </div>
+    </button>
   );
 }
 
 /* ── tab views ── */
-function OverviewTab() {
+function OverviewTab({ onNavigate }: { onNavigate: (path: string) => void }) {
   const streak=12, wordsLearned=48, totalWords=100, weeklyGoal=10, weeklyProgress=7;
   return (
     <div className="space-y-4">
@@ -135,7 +138,15 @@ function OverviewTab() {
 
       {/* Weekly activity dots */}
       <div className="bg-white rounded-2xl p-5 shadow-sm border border-[#E8E6E0]">
-        <h3 className="font-semibold text-[#1B1F3B] mb-4">Aktivitas 7 Hari</h3>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-semibold text-[#1B1F3B]">Aktivitas 7 Hari</h3>
+          <button
+            onClick={() => onNavigate("/weekly-stats")}
+            className="text-xs text-[#F4A07A] font-semibold"
+          >
+            Lihat detail →
+          </button>
+        </div>
         <div className="flex justify-between gap-2">
           {DAYS.map((d,i) => <DayDot key={d} day={d} active={i<5} completed={i<4}/>)}
         </div>
@@ -147,11 +158,19 @@ function OverviewTab() {
         <QuickStat icon={<Check size={20} className="text-[#69B578]"/>}    value="35"      label="Sesi selesai"/>
         <QuickStat icon={<TrendingUp size={20} className="text-[#2196F3]"/>} value="+12%"  label="Minggu ini"/>
       </div>
+
+      {/* Practice button */}
+      <button
+        onClick={() => onNavigate("/practice")}
+        className="w-full bg-[#1B1F3B] text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-lg"
+      >
+        <Target size={20}/>Mulai Latihan Sekarang
+      </button>
     </div>
   );
 }
 
-function AchievementsTab() {
+function AchievementsTab({ onNavigate }: { onNavigate: (path: string) => void }) {
   const unlocked = ACHIEVEMENTS.filter(a => a.unlocked).length;
   return (
     <div>
@@ -165,7 +184,13 @@ function AchievementsTab() {
         </div>
       </div>
       <div className="space-y-3">
-        {ACHIEVEMENTS.map(a => <AchievementCard key={a.id} a={a}/>)}
+        {ACHIEVEMENTS.map(a => (
+          <AchievementCard
+            key={a.id}
+            a={a}
+            onClick={() => onNavigate(`/achievements/${a.id}`)}
+          />
+        ))}
       </div>
     </div>
   );
@@ -225,7 +250,10 @@ export default function LearningProgressPage() {
 
       {/* Tab content */}
       <div className="flex-1 overflow-y-auto px-4 py-4 pb-8">
-        {tab === "overview" ? <OverviewTab/> : <AchievementsTab/>}
+        {tab === "overview"
+          ? <OverviewTab onNavigate={(p) => router.push(p)}/>
+          : <AchievementsTab onNavigate={(p) => router.push(p)}/>
+        }
       </div>
     </div>
   );

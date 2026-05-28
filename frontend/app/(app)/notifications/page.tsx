@@ -72,7 +72,10 @@ export default function NotificationsPage() {
               <div key={n.id} className={`rounded-2xl overflow-hidden shadow-sm border transition-all ${
                 n.read?"bg-white border-[#E8E6E0]":"bg-gradient-to-br from-white to-[#F0F8FF] border-[#4A90E2]/30 ring-2 ring-[#4A90E2]/20"
               }`}>
-                <div className="flex items-start gap-3 p-4">
+                <button
+                  onClick={() => router.push(`/notifications/${n.id}`)}
+                  className="w-full flex items-start gap-3 p-4 text-left"
+                >
                   <div className={`w-12 h-12 bg-gradient-to-br ${n.color} rounded-xl flex items-center justify-center text-white flex-shrink-0 shadow-md`}>{n.icon}</div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between mb-1">
@@ -82,15 +85,21 @@ export default function NotificationsPage() {
                     <p className="text-xs text-[#6B7194] leading-relaxed mb-2">{n.message}</p>
                     <div className="flex items-center justify-between">
                       <span className="text-[10px] text-[#9B9890]">{fmtT(n.timestamp)}</span>
-                      <button onClick={()=>setItems(items.filter(i=>i.id!==n.id))} className="text-[#F44336] p-1.5 rounded-lg">
+                      <button
+                        onClick={(e)=>{e.stopPropagation();setItems(items.filter(i=>i.id!==n.id))}}
+                        className="text-[#F44336] p-1.5 rounded-lg"
+                      >
                         <Trash2 size={14}/>
                       </button>
                     </div>
                   </div>
-                </div>
+                </button>
                 {(n.type==="reward"||n.type==="achievement")&&!n.read&&(
                   <div className="bg-[#EEF0F6] px-4 py-2.5 border-t border-[#E8E6E0]">
-                    <button className={`w-full py-2.5 bg-gradient-to-r ${n.color} text-white rounded-xl font-semibold text-sm shadow-md`}>
+                    <button
+                      onClick={() => router.push(`/notifications/${n.id}`)}
+                      className={`w-full py-2.5 bg-gradient-to-r ${n.color} text-white rounded-xl font-semibold text-sm shadow-md`}
+                    >
                       {n.type==="reward"?"Klaim Hadiah":"Lihat Detail"}
                     </button>
                   </div>

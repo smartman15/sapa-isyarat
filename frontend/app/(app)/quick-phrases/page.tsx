@@ -58,7 +58,13 @@ export default function QuickPhrasesPage() {
         {CATS.map(c => (
           <button
             key={c}
-            onClick={() => setActive(c)}
+            onClick={() => {
+              if (c !== "Semua" && ["Sapaan","Darurat","Medis","Restoran"].includes(c)) {
+                router.push(`/quick-phrases/${c.toLowerCase()}`);
+              } else {
+                setActive(c);
+              }
+            }}
             className={`px-3.5 py-1.5 rounded-full whitespace-nowrap text-[11px] font-medium ${
               active === c ? "bg-[#1B1F3B] text-white" : "bg-white text-[#6B7194] border border-[#E0DEDB]"
             }`}
@@ -100,7 +106,12 @@ export default function QuickPhrasesPage() {
               <div className="text-[13px] font-medium text-[#1B1F3B] mb-0.5">{p.phrase}</div>
               <div className="text-[11px] text-[#6B7194]">{p.category}</div>
             </div>
-            <button className="bg-[#1B1F3B] text-white px-3 py-1.5 rounded-lg text-[11px] font-semibold">Pakai</button>
+            <button
+              onClick={() => router.push(`/phrase-display?phrase=${encodeURIComponent(p.phrase)}`)}
+              className="bg-[#1B1F3B] text-white px-3 py-1.5 rounded-lg text-[11px] font-semibold"
+            >
+              Pakai
+            </button>
           </div>
         ))}
       </div>

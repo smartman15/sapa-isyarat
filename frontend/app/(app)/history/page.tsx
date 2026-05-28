@@ -87,7 +87,10 @@ export default function HistoryPage() {
               return (
                 <div key={item.id} className={i===0?"ring-2 ring-[#F4A07A] ring-opacity-50 rounded-2xl":""}>
                   <div className="bg-white rounded-2xl shadow-sm border border-[#E8E6E0] overflow-hidden">
-                    <div className="flex items-start gap-3 p-4">
+                    <button
+                      onClick={() => router.push(`/history/${item.id}`)}
+                      className="w-full flex items-start gap-3 p-4 text-left"
+                    >
                       <div className={`w-12 h-12 ${c.bg} rounded-xl flex items-center justify-center ${c.color} flex-shrink-0`}>{c.icon}</div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
@@ -101,7 +104,7 @@ export default function HistoryPage() {
                           {item.duration&&<><span>•</span><span>{item.duration}</span></>}
                         </div>
                       </div>
-                    </div>
+                    </button>
                     <div className="bg-[#FAF9F6] px-4 py-2.5 flex items-center justify-between border-t border-[#E8E6E0]">
                       <div className="flex items-center gap-4 text-[11px]">
                         <span className="text-[#6B7194]">{item.words} kata</span>

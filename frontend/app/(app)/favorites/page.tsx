@@ -41,13 +41,19 @@ function ViewBtn({ icon, active, onClick }: { icon: React.ReactNode; active: boo
   );
 }
 
-function GridCard({ item }: { item: FavItem }) {
+function GridCard({ item, onNavigate, onPractice }: { item: FavItem; onNavigate: () => void; onPractice: () => void }) {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-[#E8E6E0] overflow-hidden">
+    <button
+      onClick={onNavigate}
+      className="bg-white rounded-2xl shadow-sm border border-[#E8E6E0] overflow-hidden text-left w-full"
+    >
       <div className="relative">
         <div className="h-24 bg-gradient-to-br from-[#FDEEE6] to-[#F4F0E8] flex items-center justify-center relative">
           <div className="text-[#7A3010]">{item.emoji}</div>
-          <button className="absolute top-2 right-2 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow-md">
+          <button
+            onClick={(e) => { e.stopPropagation(); }}
+            className="absolute top-2 right-2 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow-md"
+          >
             <Heart size={16} className="text-[#FF6B6B] fill-[#FF6B6B]"/>
           </button>
         </div>
@@ -59,21 +65,30 @@ function GridCard({ item }: { item: FavItem }) {
           <span className="text-[10px] text-[#F4A07A] font-medium">{item.practiced}x latihan</span>
         </div>
         <div className="flex gap-1">
-          <button className="flex-1 bg-[#EEF0F6] text-[#1B1F3B] py-2 rounded-lg text-xs font-medium flex items-center justify-center gap-1">
+          <button
+            onClick={(e) => { e.stopPropagation(); onPractice(); }}
+            className="flex-1 bg-[#EEF0F6] text-[#1B1F3B] py-2 rounded-lg text-xs font-medium flex items-center justify-center gap-1"
+          >
             <Play size={12}/>Latih
           </button>
-          <button className="w-9 h-9 bg-[#EEF0F6] text-[#6B7194] rounded-lg flex items-center justify-center">
+          <button
+            onClick={(e) => e.stopPropagation()}
+            className="w-9 h-9 bg-[#EEF0F6] text-[#6B7194] rounded-lg flex items-center justify-center"
+          >
             <Share2 size={14}/>
           </button>
         </div>
       </div>
-    </div>
+    </button>
   );
 }
 
-function ListCard({ item }: { item: FavItem }) {
+function ListCard({ item, onNavigate, onPractice }: { item: FavItem; onNavigate: () => void; onPractice: () => void }) {
   return (
-    <div className="bg-white rounded-xl p-4 flex items-center gap-3 shadow-sm border border-[#E8E6E0]">
+    <button
+      onClick={onNavigate}
+      className="w-full bg-white rounded-xl p-4 flex items-center gap-3 shadow-sm border border-[#E8E6E0] text-left"
+    >
       <div className="w-14 h-14 bg-gradient-to-br from-[#FDEEE6] to-[#F4F0E8] rounded-xl flex items-center justify-center text-[#7A3010] flex-shrink-0">
         {item.emoji}
       </div>
@@ -86,11 +101,26 @@ function ListCard({ item }: { item: FavItem }) {
         </div>
       </div>
       <div className="flex gap-2">
-        <button className="w-9 h-9 bg-[#F4A07A] text-white rounded-lg flex items-center justify-center"><Play size={16}/></button>
-        <button className="w-9 h-9 bg-[#EEF0F6] text-[#6B7194] rounded-lg flex items-center justify-center"><Share2 size={16}/></button>
-        <button className="w-9 h-9 bg-[#FDEAEA] text-[#F44336] rounded-lg flex items-center justify-center"><Trash2 size={16}/></button>
+        <button
+          onClick={(e) => { e.stopPropagation(); onPractice(); }}
+          className="w-9 h-9 bg-[#F4A07A] text-white rounded-lg flex items-center justify-center"
+        >
+          <Play size={16}/>
+        </button>
+        <button
+          onClick={(e) => e.stopPropagation()}
+          className="w-9 h-9 bg-[#EEF0F6] text-[#6B7194] rounded-lg flex items-center justify-center"
+        >
+          <Share2 size={16}/>
+        </button>
+        <button
+          onClick={(e) => e.stopPropagation()}
+          className="w-9 h-9 bg-[#FDEAEA] text-[#F44336] rounded-lg flex items-center justify-center"
+        >
+          <Trash2 size={16}/>
+        </button>
       </div>
-    </div>
+    </button>
   );
 }
 
@@ -152,11 +182,25 @@ export default function FavoritesPage() {
       <div className="flex-1 overflow-y-auto p-4 pb-24">
         {viewMode === "grid" ? (
           <div className="grid grid-cols-2 gap-3">
-            {sorted.map(item => <GridCard key={item.id} item={item}/>)}
+            {sorted.map(item => (
+              <GridCard
+                key={item.id}
+                item={item}
+                onNavigate={() => router.push(`/dictionary/sapaan/${item.id}`)}
+                onPractice={() => router.push("/practice")}
+              />
+            ))}
           </div>
         ) : (
           <div className="space-y-2">
-            {sorted.map(item => <ListCard key={item.id} item={item}/>)}
+            {sorted.map(item => (
+              <ListCard
+                key={item.id}
+                item={item}
+                onNavigate={() => router.push(`/dictionary/sapaan/${item.id}`)}
+                onPractice={() => router.push("/practice")}
+              />
+            ))}
           </div>
         )}
       </div>
