@@ -8,3 +8,4 @@ pandas>=2.2.0
 python-multipart>=0.0.9
 mediapipe>=0.10.0
 opencv-python-headless>=4.9.0
+openai-whisper>=20231117

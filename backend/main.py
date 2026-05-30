@@ -5,13 +5,16 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes import translate
 from app.api.routes import gesture
+from app.api.routes import stt
 from app.services.model_service import load_models
+from app.services.stt_service import load_whisper_model
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Load ML models at startup."""
     app.state.models = load_models()
+    app.state.whisper = load_whisper_model()
     yield
 
 
@@ -39,6 +42,7 @@ app.add_middleware(
 # Routers
 app.include_router(translate.router, prefix="/translate", tags=["Translate"])
 app.include_router(gesture.router, prefix="/gesture", tags=["Gesture"])
+app.include_router(stt.router, prefix="/stt", tags=["Speech-to-Text"])
 
 @app.get("/", tags=["Health"])
 def root():
