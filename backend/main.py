@@ -28,7 +28,7 @@ import os
 
 ALLOWED_ORIGINS = os.getenv(
     "ALLOWED_ORIGINS",
-    "https://sapa-isyarat.vercel.app,http://localhost:3000"
+    "https://sapa-isyarat.vercel.app,http://localhost:3000,http://127.0.0.1:3000"
 ).split(",")
 
 app.add_middleware(
@@ -36,7 +36,7 @@ app.add_middleware(
     allow_origins=ALLOWED_ORIGINS,
     allow_credentials=False,   # No cookies/auth headers used — keep False
     allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type"],
+    allow_headers=["*"],       # Needed for multipart/form-data preflight (STT upload)
 )
 
 # Routers
