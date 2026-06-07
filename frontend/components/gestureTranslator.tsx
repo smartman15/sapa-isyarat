@@ -106,7 +106,6 @@ export default function GestureTranslator() {
       <div>
         <span>Sign Language: </span>
         <button
-          onClick={() => handleModeChange("SIBI")}
           disabled={true}
         >
           SIBI
