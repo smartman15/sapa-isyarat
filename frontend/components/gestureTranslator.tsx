@@ -8,7 +8,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
 const CONFIDENCE_THRESHOLD = 0.5;
 const FETCH_INTERVAL_MS = 100; // throttle to ~10 req/sec
 
-type Mode = "SIBI" | "BISINDO";
+
 type TTSMode = "auto" | "manual";
 
 export default function GestureTranslator() {
@@ -16,7 +16,7 @@ export default function GestureTranslator() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const lastFetchRef = useRef<number>(0);
 
-  const [mode, setMode] = useState<Mode>("BISINDO");
+  const mode = "SIBI";
   const [ttsMode, setTtsMode] = useState<TTSMode>("manual");
   const [transcript, setTranscript] = useState<string>("");
   const [lastLabel, setLastLabel] = useState<string>("");
@@ -105,20 +105,14 @@ export default function GestureTranslator() {
     <div>
       <p>{status}</p>
 
-      {/* Mode toggle */}
+      {/* Mode badge (SIBI only) */}
       <div>
         <span>Sign Language: </span>
         <button
           onClick={() => handleModeChange("SIBI")}
-          disabled={mode === "SIBI"}
+          disabled={true}
         >
           SIBI
-        </button>
-        <button
-          onClick={() => handleModeChange("BISINDO")}
-          disabled={mode === "BISINDO"}
-        >
-          BISINDO
         </button>
       </div>
 

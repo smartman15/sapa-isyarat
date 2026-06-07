@@ -14,7 +14,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
 const CONFIDENCE_THRESHOLD = 0.5;
 const FETCH_INTERVAL_MS = 100; // ~10 req/sec
 
-type Mode = "SIBI" | "BISINDO";
+
 
 /* ─── Page ───────────────────────────────────────────────────────── */
 export default function SignCameraPage() {
@@ -26,7 +26,7 @@ export default function SignCameraPage() {
   const lastFetchRef = useRef<number>(0);
 
   /* ── State ── */
-  const [mode, setMode]             = useState<Mode>("BISINDO");
+  const mode = "SIBI";
   const [transcript, setTranscript] = useState<string>("");
   const [lastLabel, setLastLabel]   = useState<string>("");
   const [confidence, setConfidence] = useState<number>(0);
@@ -129,12 +129,7 @@ export default function SignCameraPage() {
     speechSynthesis.speak(utter);
   };
 
-  const handleModeToggle = () => {
-    setMode((m) => (m === "BISINDO" ? "SIBI" : "BISINDO"));
-    reset();
-    setTranscript("");
-    setLastLabel("");
-  };
+
 
   const handleFlip = () => {
     setFacingMode((f) => (f === "user" ? "environment" : "user"));
@@ -202,15 +197,11 @@ export default function SignCameraPage() {
               <FlipHorizontal size={18} className="text-white" />
             </button>
 
-            {/* Mode toggle (BISINDO / SIBI) */}
-            <button
-              id="sign-camera-mode"
-              onClick={handleModeToggle}
-              className="h-11 px-3 bg-black/40 backdrop-blur-xl rounded-full flex items-center gap-1.5 active:scale-90 transition-transform"
-            >
+            {/* SIBI mode badge (fixed) */}
+            <div className="h-11 px-3 bg-black/40 backdrop-blur-xl rounded-full flex items-center gap-1.5">
               <Zap size={14} className="text-[#F4A07A]" />
-              <span className="text-white text-xs font-semibold">{mode}</span>
-            </button>
+              <span className="text-white text-xs font-semibold">SIBI</span>
+            </div>
           </div>
         </div>
 

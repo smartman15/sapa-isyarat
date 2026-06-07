@@ -10,7 +10,7 @@ class LandmarkPoint(BaseModel):
 
 class GesturePredictRequest(BaseModel):
     hands: list[list[LandmarkPoint]]  # 1–2 hands, each with 21 points
-    mode: Literal["SIBI", "BISINDO"]
+    mode: Literal["SIBI"]
 
 
 class GesturePredictResponse(BaseModel):
