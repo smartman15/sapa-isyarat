@@ -90,10 +90,7 @@ export default function GestureTranslator() {
     onStatusChange: setStatus,
   });
 
-  const handleModeChange = (newMode: Mode) => {
-    setMode(newMode);
-    reset(); // clear the stability buffer when switching modes
-  };
+
 
   const handleClear = () => {
     setTranscript("");
