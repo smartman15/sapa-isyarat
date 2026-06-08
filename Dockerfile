@@ -11,7 +11,13 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Install ffmpeg — required by Whisper to decode audio files (webm, ogg, mp3)
+# Tell Whisper where to store model files.
+# System users (--system) have no home dir (/nonexistent), so the default
+# ~/.cache/whisper path fails with Permission denied. Using a path under
+# /app (which appuser owns) solves this on both Render and local Docker.
+ENV WHISPER_CACHE=/app/whisper_cache
+
+# Install ffmpeg — required by Whisper to decode audio (webm, ogg, mp3)
 RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
@@ -21,17 +27,14 @@ COPY backend/requirements.txt .
 # opencv-python-headless avoids needing libgl1 system libs on slim image
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Pre-download the Whisper base model at build time so it is baked into the
-# image. This avoids a cold-start download that times out on Render free tier.
-# The model is cached in /root/.cache/whisper/ and made world-readable so the
-# non-root appuser can access it at runtime.
-RUN python -c "import whisper; whisper.load_model('base')" \
-    && chmod -R a+rX /root/.cache/whisper
+# Pre-download the Whisper base model into WHISPER_CACHE at build time.
+# This avoids runtime downloads that time out on Render's free tier.
+RUN python -c "import whisper; whisper.load_model('base', download_root='/app/whisper_cache')"
 
 # Copy only the backend source — frontend is excluded entirely
 COPY backend/ .
 
-# Give the non-root user ownership of the app directory
+# Give appuser ownership of everything under /app (including the model cache)
 RUN chown -R appuser:appgroup /app
 
 USER appuser

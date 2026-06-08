@@ -15,11 +15,15 @@ from typing import Any
 # Whisper is imported lazily inside load_whisper_model() so that the rest
 # of the app can still start if the package is not yet installed.
 
-# Default model size — "base" is fast and accurate enough for short utterances.
-# "small" is better for Indonesian but ~4× slower to load.
-# "small" is significantly more accurate than "base" for Indonesian,
-# while still being usable on CPU (loads in ~8s, transcribes in ~5s/clip).
+# Default model size — "small" gives better Indonesian accuracy locally.
+# On Render, render.yaml overrides this to "base" to fit the free tier.
 WHISPER_MODEL_SIZE = os.getenv("WHISPER_MODEL_SIZE", "small")
+
+# Where Whisper stores/finds its model weights.
+# Set to /app/whisper_cache in the Dockerfile so the non-root appuser
+# (which has no home dir on Render) can read the pre-downloaded model.
+# Locally this is unset and Whisper defaults to ~/.cache/whisper/.
+WHISPER_CACHE = os.getenv("WHISPER_CACHE", None)
 
 # Supported audio MIME types → file extensions for the temp file
 MIME_TO_EXT: dict[str, str] = {
@@ -42,7 +46,7 @@ def load_whisper_model() -> Any | None:
     """
     try:
         import whisper  # type: ignore
-        model = whisper.load_model(WHISPER_MODEL_SIZE)
+        model = whisper.load_model(WHISPER_MODEL_SIZE, download_root=WHISPER_CACHE)
         print(f"[OK] Whisper '{WHISPER_MODEL_SIZE}' model loaded.")
         return model
     except ImportError:
