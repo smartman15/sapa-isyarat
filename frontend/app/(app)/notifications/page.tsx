@@ -10,8 +10,8 @@ const INIT: Notif[] = [
   { id:"1", type:"achievement", title:"Pencapaian Baru!",      message:'Selamat! Anda telah membuka pencapaian "Dedikasi 7 Hari" 🎉', timestamp:new Date("2026-05-15T10:30:00"), read:false, icon:<Trophy size={20}/>,       color:"from-[#FFD700] to-[#FFA500]" },
   { id:"2", type:"reminder",    title:"Jaga Streakmu!",         message:"Streak 12 hari! Jangan lupa berlatih hari ini untuk melanjutkan",  timestamp:new Date("2026-05-15T09:00:00"), read:false, icon:<Flame size={20}/>,        color:"from-[#FF6B35] to-[#F44336]" },
   { id:"3", type:"reward",      title:"Hadiah Tersedia!",       message:"Klaim 50 XP bonus untuk penyelesaian target mingguanmu",           timestamp:new Date("2026-05-14T16:20:00"), read:true,  icon:<Gift size={20}/>,         color:"from-[#F4A07A] to-[#E89566]" },
-  { id:"4", type:"update",      title:"10 Kata Baru Ditambahkan",message:"Kamus BISINDO diperbarui dengan kosakata kesehatan",               timestamp:new Date("2026-05-14T10:00:00"), read:true,  icon:<BookOpen size={20}/>,     color:"from-[#1B1F3B] to-[#2D335E]" },
-  { id:"5", type:"social",      title:"Komunitas Baru!",        message:"Bergabunglah dengan komunitas pelajar BISINDO di aplikasi",         timestamp:new Date("2026-05-13T14:00:00"), read:true,  icon:<MessageCircle size={20}/>,color:"from-[#4CAF50] to-[#69B578]" },
+  { id:"4", type:"update",      title:"10 Kata Baru Ditambahkan",message:"Kamus SIBI diperbarui dengan kosakata kesehatan",                timestamp:new Date("2026-05-14T10:00:00"), read:true,  icon:<BookOpen size={20}/>,     color:"from-[#1B1F3B] to-[#2D335E]" },
+  { id:"5", type:"social",      title:"Komunitas Baru!",        message:"Bergabunglah dengan komunitas pelajar SIBI di aplikasi",          timestamp:new Date("2026-05-13T14:00:00"), read:true,  icon:<MessageCircle size={20}/>,color:"from-[#4CAF50] to-[#69B578]" },
 ];
 
 const fmtT = (d:Date)=>{

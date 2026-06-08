@@ -11,8 +11,8 @@ type Tutorial = { id: string; title: string; duration: string; icon: React.React
 
 const FAQS: FAQ[] = [
   { id:"1", category:"Dasar",        question:"Bagaimana cara menggunakan penerjemah isyarat?", answer:"Tap fitur \"Terjemahkan Isyarat\" di beranda, arahkan kamera ke tangan Anda, dan aplikasi akan mendeteksi gerakan isyarat secara real-time. Pastikan pencahayaan cukup dan tangan terlihat jelas di layar." },
-  { id:"2", category:"Dasar",        question:"Apakah aplikasi bisa bekerja offline?",           answer:"Kamus BISINDO dapat diakses offline. Namun, fitur penerjemahan real-time dan speech-to-text memerlukan koneksi internet untuk hasil terbaik." },
-  { id:"3", category:"Kamus",        question:"Berapa banyak kata BISINDO yang tersedia?",       answer:"Saat ini kami menyediakan 300+ kata dan frasa BISINDO lengkap dengan video tutorial. Kami terus menambahkan kata baru setiap bulannya." },
+  { id:"2", category:"Dasar",        question:"Apakah aplikasi bisa bekerja offline?",           answer:"Kamus SIBI dapat diakses offline. Namun, fitur penerjemahan real-time dan speech-to-text memerlukan koneksi internet untuk hasil terbaik." },
+  { id:"3", category:"Kamus",        question:"Berapa banyak kata SIBI yang tersedia?",         answer:"Saat ini kami menyediakan 300+ kata dan frasa SIBI lengkap dengan video tutorial. Kami terus menambahkan kata baru setiap bulannya." },
   { id:"4", category:"Fitur",        question:"Bagaimana cara menggunakan mode darurat?",        answer:"Akses mode darurat dari beranda atau dengan swipe dari kiri. Pilih pesan darurat dan layar akan menampilkan teks besar yang mudah dibaca. Mode ini dirancang untuk komunikasi cepat dalam situasi darurat." },
   { id:"5", category:"Privasi",      question:"Apakah data saya aman?",                          answer:"Ya, semua data Anda dienkripsi dan disimpan secara lokal. Kami tidak membagikan informasi pribadi Anda kepada pihak ketiga tanpa izin Anda." },
   { id:"6", category:"Fitur",        question:"Bagaimana cara melacak progress belajar?",        answer:"Tap menu \"Progress Belajar\" di beranda untuk melihat statistik lengkap, streak harian, pencapaian, dan riwayat pembelajaran Anda." },
@@ -24,7 +24,7 @@ const TUTORIALS: Tutorial[] = [
   { id:"1", title:"Memulai dengan Sapa Isyarat",  duration:"3 menit", icon:<Play size={20}/>,          steps:5 },
   { id:"2", title:"Menggunakan Kamera Deteksi",   duration:"5 menit", icon:<Camera size={20}/>,        steps:7 },
   { id:"3", title:"Mode Percakapan",              duration:"4 menit", icon:<MessageCircle size={20}/>, steps:6 },
-  { id:"4", title:"Menjelajahi Kamus BISINDO",    duration:"6 menit", icon:<BookOpen size={20}/>,      steps:8 },
+  { id:"4", title:"Menjelajahi Kamus SIBI",     duration:"6 menit", icon:<BookOpen size={20}/>,      steps:8 },
 ];
 
 const CATS = ["Semua","Dasar","Fitur","Kamus","Aksesibilitas","Privasi"];

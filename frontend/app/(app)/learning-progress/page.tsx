@@ -17,7 +17,7 @@ const ACHIEVEMENTS: Achievement[] = [
   { id:"3", title:"Kolektor Kata",     description:"Kumpulkan 50 kata",                 icon:<BookOpen size={24} className="text-[#1B1F3B]"/>,                         unlocked:false, progress:48, total:50  },
   { id:"4", title:"Master Percakapan", description:"20 percakapan selesai",             icon:<MessageCircle size={24} className="text-[#F4A07A]"/>,                    unlocked:false, progress:12, total:20  },
   { id:"5", title:"Rajin Berlatih",    description:"Latihan 30 hari",                   icon:<Target size={24} className="text-[#2196F3]"/>,                           unlocked:false, progress:12, total:30  },
-  { id:"6", title:"Ahli BISINDO",      description:"100 kata dikuasai",                 icon:<Trophy size={24} className="text-[#FFC107]"/>,                           unlocked:false, progress:48, total:100 },
+  { id:"6", title:"Ahli SIBI",       description:"100 kata dikuasai",                 icon:<Trophy size={24} className="text-[#FFC107]"/>,                           unlocked:false, progress:48, total:100 },
 ];
 
 const DAYS = ["Sen","Sel","Rab","Kam","Jum","Sab","Min"];

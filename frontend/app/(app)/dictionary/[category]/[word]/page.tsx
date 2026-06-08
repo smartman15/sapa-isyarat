@@ -64,7 +64,7 @@ export default function DictionaryDetailPage() {
             Sapaan
           </div>
         </div>
-        <p className="text-xs text-[#6B7194] mb-3.5">BISINDO · /te-ri-ma ka-sih/</p>
+        <p className="text-xs text-[#6B7194] mb-3.5">SIBI · /te-ri-ma ka-sih/</p>
 
         {/* Steps */}
         <div className="mb-3.5">

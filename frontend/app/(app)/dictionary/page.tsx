@@ -53,7 +53,7 @@ function WordListItem({ word, onClick }: { word: (typeof WORDS)[number]; onClick
       </div>
       <div className="flex-1 text-left">
         <div className="text-[13px] font-medium text-[#1B1F3B]">{word.word}</div>
-        <div className="text-[11px] text-[#6B7194]">{word.category} · BISINDO</div>
+        <div className="text-[11px] text-[#6B7194]">{word.category} · SIBI</div>
       </div>
       <div className="text-sm text-[#C8C5BE]">→</div>
     </button>
@@ -91,7 +91,7 @@ export default function DictionaryPage() {
           className="w-full bg-white/10 rounded-xl px-3.5 py-2.5 flex items-center gap-2 relative z-10"
         >
           <Search size={16} className="text-white/40" />
-          <span className="text-[13px] text-white/30">Cari kata dalam BISINDO...</span>
+          <span className="text-[13px] text-white/30">Cari kata dalam SIBI...</span>
         </button>
       </div>
 

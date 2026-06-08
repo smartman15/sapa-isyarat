@@ -78,7 +78,7 @@ export default function ProfilePage() {
         </div>
         <SectionLabel>Preferensi</SectionLabel>
         <div className="bg-white border border-[#E8E6E0] rounded-[14px] overflow-hidden mb-3.5">
-          <SettingRow icon={<Languages size={16}/>} label="Bahasa isyarat"    value="BISINDO"/>
+          <SettingRow icon={<Languages size={16}/>} label="Bahasa isyarat"    value="SIBI"/>
           <SettingRow icon={<Moon size={16}/>}      label="Tampilan gelap"    toggle toggleOn/>
           <SettingRow icon={<Bell size={16}/>}      label="Notifikasi belajar" toggle toggleOn last/>
         </div>

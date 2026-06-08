@@ -12,8 +12,8 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "Sapa Isyarat — Aplikasi Bahasa Isyarat Indonesia",
   description:
-    "Aplikasi real-time untuk menerjemahkan bahasa isyarat SIBI dan BISINDO menggunakan kamera. Membantu komunikasi antara komunitas Tuli dan pendengar di Indonesia.",
-  keywords: ["bahasa isyarat", "SIBI", "BISINDO", "tunarungu", "sign language", "Indonesia"],
+    "Aplikasi real-time untuk menerjemahkan bahasa isyarat SIBI menggunakan kamera. Membantu komunikasi antara komunitas Tuli dan pendengar di Indonesia.",
+  keywords: ["bahasa isyarat", "SIBI", "tunarungu", "sign language", "Indonesia"],
 };
 
 export default function RootLayout({

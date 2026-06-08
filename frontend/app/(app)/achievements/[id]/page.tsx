@@ -6,7 +6,7 @@ import { ArrowLeft, Trophy, Star, Target, Share2, Lock } from "lucide-react";
 const STUB = {
   id: "3",
   title: "Kolektor Kata",
-  description: "Kumpulkan 50 kata BISINDO dalam kamus favoritmu.",
+  description: "Kumpulkan 50 kata SIBI dalam kamus favoritmu.",
   icon: "📖",
   unlocked: false,
   unlockedDate: undefined as Date | undefined,

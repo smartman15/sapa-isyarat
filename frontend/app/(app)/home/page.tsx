@@ -243,7 +243,7 @@ export default function HomePage() {
               <div className="text-[11px] text-white/48">Arahkan kamera, mulai komunikasi</div>
               <div className="flex items-center gap-1 mt-1.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#69B578]" />
-                <span className="text-[10px] text-[#69B578] font-medium">Real-time · BISINDO</span>
+                <span className="text-[10px] text-[#69B578] font-medium">Real-time · SIBI</span>
               </div>
             </div>
             <div className="text-lg text-white/30 relative z-10">→</div>
@@ -254,7 +254,7 @@ export default function HomePage() {
         <div className="grid grid-cols-2 gap-2.5 mb-2.5">
           <FeatureCard icon={<Mic size={18} />} title="Suara ke teks" subtitle="Real-time speech recognition" bgColor="ic-peach" onClick={() => onNavigate("speech-to-text")} />
           <FeatureCard icon={<MessageSquare size={18} />} title="Percakapan" subtitle="Mode dua arah interaktif" bgColor="ic-sand" onClick={() => onNavigate("conversation")} />
-          <FeatureCard icon={<BookOpen size={18} />} title="Kamus isyarat" subtitle="300+ kata BISINDO" bgColor="ic-slate" onClick={() => onNavigate("dictionary")} />
+          <FeatureCard icon={<BookOpen size={18} />} title="Kamus isyarat" subtitle="300+ kata SIBI" bgColor="ic-slate" onClick={() => onNavigate("dictionary")} />
           <FeatureCard icon={<Zap size={18} />} title="Kalimat cepat" subtitle="Frasa sehari-hari siap pakai" bgColor="ic-peach" onClick={() => onNavigate("quick-phrases")} />
           <FeatureCard icon={<History size={18} />} title="Riwayat" subtitle="Lihat percakapan sebelumnya" bgColor="ic-slate" onClick={() => onNavigate("history")} />
           <FeatureCard icon={<TrendingUp size={18} />} title="Progress belajar" subtitle="Tracking & achievements" bgColor="ic-peach" onClick={() => onNavigate("learning-progress")} />
@@ -284,8 +284,8 @@ export default function HomePage() {
           <h3 className="text-[11px] font-semibold text-[#6B7194] uppercase tracking-wider mb-2.5">
             Terakhir dipelajari
           </h3>
-          <RecentItem icon={<HandMetal size={15} />} word="Terima kasih" category="Sapaan · BISINDO" bgColor="ic-peach" onClick={() => onNavigate("dictionary")} />
-          <RecentItem icon={<HandMetal size={15} />} word="Tolong bantu saya" category="Darurat · BISINDO" bgColor="ic-slate" onClick={() => onNavigate("dictionary")} />
+          <RecentItem icon={<HandMetal size={15} />} word="Terima kasih" category="Sapaan · SIBI" bgColor="ic-peach" onClick={() => onNavigate("dictionary")} />
+          <RecentItem icon={<HandMetal size={15} />} word="Tolong bantu saya" category="Darurat · SIBI" bgColor="ic-slate" onClick={() => onNavigate("dictionary")} />
         </div>
       </div>
 

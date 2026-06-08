@@ -103,7 +103,7 @@ const featureSlides: SlideData[] = [
   {
     illustration: "camera",
     title: "Terjemahkan isyarat,\nseketika",
-    subtitle: "Arahkan kamera ke tangan dan Isya menerjemahkan BISINDO ke teks secara real-time.",
+    subtitle: "Arahkan kamera ke tangan dan Isya menerjemahkan SIBI ke teks secara real-time.",
   },
   {
     illustration: "speech",
@@ -112,7 +112,7 @@ const featureSlides: SlideData[] = [
   },
   {
     illustration: "dictionary",
-    title: "Belajar BISINDO\nbersama Isya",
+    title: "Belajar SIBI\nbersama Isya",
     subtitle: "300+ kata dengan video demonstrasi, kuis seru, dan gamification untuk semangat belajarmu.",
   },
 ];
@@ -195,7 +195,7 @@ export default function OnboardingPage() {
 
           {/* Tag pills */}
           <div className="flex gap-2 flex-wrap justify-center">
-            {["Gratis", "BISINDO", "Mudah Digunakan"].map(tag => (
+            {["Gratis", "SIBI", "Mudah Digunakan"].map(tag => (
               <span key={tag} className="px-3 py-1 rounded-full text-[11px] font-medium text-white/55 border border-white/12 bg-white/[0.05]">
                 {tag}
               </span>

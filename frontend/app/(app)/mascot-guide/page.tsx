@@ -118,7 +118,7 @@ export default function MascotGuidePage() {
         <div className="bg-[#F0EEE8] rounded-[16px] p-4 mb-6 flex gap-3">
           <Info size={16} className="text-[#6B7194] flex-shrink-0 mt-0.5"/>
           <p className="text-[12.5px] text-[#6B7194] leading-relaxed">
-            <span className="font-bold text-[#1B1F3B]">Isya</span> adalah maskot resmi Sapa Isyarat — karakter beruang mungil berwarna peach yang ramah dan ekspresif. Isya hadir untuk menghangatkan antarmuka dan membuat pengalaman belajar BISINDO terasa menyenangkan.
+            <span className="font-bold text-[#1B1F3B]">Isya</span> adalah maskot resmi Sapa Isyarat — karakter beruang mungil berwarna peach yang ramah dan ekspresif. Isya hadir untuk menghangatkan antarmuka dan membuat pengalaman belajar SIBI terasa menyenangkan.
           </p>
         </div>
 

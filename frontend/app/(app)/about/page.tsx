@@ -4,7 +4,7 @@ import { ArrowLeft, Heart, Users, Globe, Award, Shield, Zap, Code } from "lucide
 
 const FEATURES = [
   { icon:<Zap size={24}/>,    title:"Real-time AI",    description:"Deteksi isyarat tangan dengan teknologi AI terkini",    color:"from-[#FFD700] to-[#FFA500]" },
-  { icon:<Globe size={24}/>,  title:"BISINDO",         description:"300+ kata dan frasa Bahasa Isyarat Indonesia",           color:"from-[#4A90E2] to-[#6CAEE4]" },
+  { icon:<Globe size={24}/>,  title:"SIBI",          description:"300+ kata dan frasa Sistem Isyarat Bahasa Indonesia",    color:"from-[#4A90E2] to-[#6CAEE4]" },
   { icon:<Shield size={24}/>, title:"Privasi Terjaga", description:"Data Anda aman dan terenkripsi",                         color:"from-[#69B578] to-[#4CAF50]" },
   { icon:<Heart size={24}/>,  title:"Inklusif",        description:"Dirancang dengan aksesibilitas WCAG AA",                  color:"from-[#F4A07A] to-[#E89566]" },
 ];
