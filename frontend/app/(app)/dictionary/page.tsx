@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search, HandMetal, Heart, Volume2, HelpCircle, User, Building2, ThumbsUp } from "lucide-react";
+import { Search, X, HandMetal, Heart, Volume2, HelpCircle, User, Building2, ThumbsUp } from "lucide-react";
 import BottomNav from "@/components/BottomNav";
 
 type Category = "semua" | "sapaan" | "darurat" | "kesehatan";
@@ -63,17 +63,23 @@ function WordListItem({ word, onClick }: { word: (typeof WORDS)[number]; onClick
 export default function DictionaryPage() {
   const router = useRouter();
   const [activeCategory, setActiveCategory] = useState<Category>("semua");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const cats: { id: Category; label: string }[] = [
-    { id: "semua",    label: "Semua"    },
-    { id: "sapaan",   label: "Sapaan"   },
-    { id: "darurat",  label: "Darurat"  },
-    { id: "kesehatan",label: "Kesehatan"},
+    { id: "semua",     label: "Semua"     },
+    { id: "sapaan",    label: "Sapaan"    },
+    { id: "darurat",   label: "Darurat"   },
+    { id: "kesehatan", label: "Kesehatan" },
   ];
 
-  const filtered = activeCategory === "semua"
-    ? WORDS
-    : WORDS.filter(w => w.category.toLowerCase() === activeCategory);
+  const isSearching = searchQuery.trim().length > 0;
+
+  // Apply both the category chip and search query as filters
+  const filtered = WORDS.filter(w => {
+    const matchesCategory = activeCategory === "semua" || w.category.toLowerCase() === activeCategory;
+    const matchesSearch   = w.word.toLowerCase().includes(searchQuery.trim().toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <div className="h-full flex flex-col bg-[#FAF9F6]">
@@ -86,13 +92,28 @@ export default function DictionaryPage() {
         <h1 className="text-lg font-semibold text-white mb-3 relative z-10 mt-8" style={{ letterSpacing: "-0.2px" }}>
           Kamus Isyarat
         </h1>
-        <button
-          onClick={() => router.push("/search")}
-          className="w-full bg-white/10 rounded-xl px-3.5 py-2.5 flex items-center gap-2 relative z-10"
-        >
-          <Search size={16} className="text-white/40" />
-          <span className="text-[13px] text-white/30">Cari kata dalam SIBI...</span>
-        </button>
+
+        {/* Live search input */}
+        <div className="relative z-10 flex items-center bg-white/10 rounded-xl px-3.5 py-2.5 gap-2">
+          <Search size={16} className="text-white/40 flex-shrink-0" />
+          <input
+            id="dictionary-search"
+            type="text"
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            placeholder="Cari kata dalam SIBI..."
+            className="flex-1 bg-transparent text-[13px] text-white placeholder:text-white/30 outline-none"
+          />
+          {isSearching && (
+            <button
+              onClick={() => setSearchQuery("")}
+              className="text-white/40 hover:text-white/70 transition-colors flex-shrink-0"
+              aria-label="Hapus pencarian"
+            >
+              <X size={15} />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Category chips */}
@@ -104,16 +125,47 @@ export default function DictionaryPage() {
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto px-3.5 pb-24">
-        <div className="text-[10px] font-semibold text-[#6B7194] uppercase tracking-wider mb-2">Populer</div>
-        <div className="grid grid-cols-2 gap-2 mb-4">
-          {filtered.slice(0, 2).map(word => (
-            <WordCard key={word.id} word={word} onClick={() => router.push(`/dictionary/sapaan/${word.id}`)} />
-          ))}
-        </div>
-        <div className="text-[10px] font-semibold text-[#6B7194] uppercase tracking-wider mb-2">Semua kata</div>
-        {filtered.slice(2).map(word => (
-          <WordListItem key={word.id} word={word} onClick={() => router.push(`/dictionary/sapaan/${word.id}`)} />
-        ))}
+
+        {/* Empty state */}
+        {filtered.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-16 gap-3">
+            <div className="w-14 h-14 rounded-full bg-[#EEF0F6] flex items-center justify-center">
+              <Search size={22} className="text-[#6B7194]" />
+            </div>
+            <p className="text-[13px] text-[#6B7194] text-center">
+              Tidak ada kata yang cocok dengan<br />
+              <span className="font-semibold text-[#1B1F3B]">&quot;{searchQuery}&quot;</span>
+            </p>
+          </div>
+        )}
+
+        {/* Search results — flat list, no Populer/Semua kata split */}
+        {isSearching && filtered.length > 0 && (
+          <>
+            <div className="text-[10px] font-semibold text-[#6B7194] uppercase tracking-wider mb-2">
+              {filtered.length} hasil ditemukan
+            </div>
+            {filtered.map(word => (
+              <WordListItem key={word.id} word={word} onClick={() => router.push(`/dictionary/sapaan/${word.id}`)} />
+            ))}
+          </>
+        )}
+
+        {/* Default browsing layout (no active search) */}
+        {!isSearching && filtered.length > 0 && (
+          <>
+            <div className="text-[10px] font-semibold text-[#6B7194] uppercase tracking-wider mb-2">Populer</div>
+            <div className="grid grid-cols-2 gap-2 mb-4">
+              {filtered.slice(0, 2).map(word => (
+                <WordCard key={word.id} word={word} onClick={() => router.push(`/dictionary/sapaan/${word.id}`)} />
+              ))}
+            </div>
+            <div className="text-[10px] font-semibold text-[#6B7194] uppercase tracking-wider mb-2">Semua kata</div>
+            {filtered.slice(2).map(word => (
+              <WordListItem key={word.id} word={word} onClick={() => router.push(`/dictionary/sapaan/${word.id}`)} />
+            ))}
+          </>
+        )}
       </div>
 
       <BottomNav />

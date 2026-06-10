@@ -27,20 +27,19 @@ function FullScreen({ text, onBack, onClose }: { text: string; onBack: () => voi
           TUTUP MODE DARURAT
         </button>
       </div>
-      <div className="absolute top-24 left-1/2 -translate-x-1/2 z-10">
-        <div className="w-24 h-24 bg-[#F44336] rounded-full flex items-center justify-center shadow-2xl animate-bounce">
+      <div className="flex-1 flex flex-col items-center justify-between pt-24 pb-8 px-6 relative z-10 overflow-y-auto">
+        <div className="w-24 h-24 bg-[#F44336] rounded-full flex items-center justify-center shadow-2xl shrink-0">
           <AlertTriangle size={48} className="text-white"/>
         </div>
-      </div>
-      <div className="flex-1 flex items-center justify-center px-8 relative z-10">
-        <div className="text-center">
-          <div className="bg-[#F44336] rounded-[40px] px-12 py-16 shadow-2xl border-8 border-white">
-            <h1 className="text-white font-black leading-tight uppercase"
-              style={{ fontSize:"clamp(2rem,8vw,3.5rem)", letterSpacing:"0.05em", textShadow:"0 4px 12px rgba(0,0,0,0.3)" }}>
+        
+        <div className="text-center mt-6 w-full">
+          <div className="bg-[#F44336] rounded-[40px] px-8 py-10 shadow-2xl border-8 border-white">
+            <h1 className="text-white font-black leading-tight uppercase break-words"
+              style={{ fontSize:"clamp(1.5rem,7vw,3.5rem)", letterSpacing:"0.05em", textShadow:"0 4px 12px rgba(0,0,0,0.3)" }}>
               {text}
             </h1>
           </div>
-          <div className="flex justify-center items-center gap-2 mt-8">
+          <div className="flex justify-center items-center gap-2 mt-6">
             {[0,0.3,0.6].map((d,i) => <div key={i} className="w-4 h-4 bg-[#F44336] rounded-full animate-pulse" style={{animationDelay:`${d}s`}}/>)}
           </div>
         </div>

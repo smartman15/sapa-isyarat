@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import {
   Home, MessageCircle, BookOpen, User, Camera, Mic, MessageSquare,
   Zap, Search, HandMetal, Heart, Bell, History, TrendingUp,
-  AlertTriangle, Star,
+  AlertTriangle,
 } from "lucide-react";
 import Mascot from "@/components/Mascot";
 
@@ -102,38 +102,6 @@ function NavItem({
   );
 }
 
-/* ─── Word of the Day card ──────────────────────────────────────── */
-function WordOfDayCard({ onNavigate }: { onNavigate: (s: string) => void }) {
-  return (
-    <div className="mb-2.5">
-      <div className="bg-gradient-to-br from-[#1B1F3B] to-[#252A52] rounded-[18px] p-4 relative overflow-hidden">
-        <div className="absolute -top-8 -right-8 w-[80px] h-[80px] rounded-full border-[16px] border-[#F4A07A] opacity-[0.15] pointer-events-none" />
-        <div className="flex items-start gap-3 relative z-10">
-          <div className="w-[70px] h-[70px] bg-[#F4A07A]/10 rounded-[14px] flex items-center justify-center flex-shrink-0 border border-[#F4A07A]/20">
-            <HandSignIllustration />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-1.5 mb-1">
-              <Star size={11} className="text-[#F4A07A]" fill="#F4A07A" />
-              <span className="text-[10px] font-semibold text-[#F4A07A] uppercase tracking-wider">Kata Hari Ini</span>
-            </div>
-            <div className="text-[18px] font-bold text-white leading-none mb-0.5" style={{ letterSpacing: "-0.3px" }}>
-              Selamat
-            </div>
-            <div className="text-[11px] text-white/40 mb-2">/se·la·mat/ · Sapaan</div>
-            <button
-              onClick={() => onNavigate("dictionary")}
-              className="bg-[#F4A07A] text-white text-[11px] font-semibold px-3 py-1.5 rounded-lg"
-            >
-              Pelajari →
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 
 /* ─── Main Page ──────────────────────────────────────────────────── */
 export default function HomePage() {
@@ -144,8 +112,6 @@ export default function HomePage() {
     <div className="h-full flex flex-col bg-[#FAF9F6]">
       {/* Header */}
       <div className="bg-[#1B1F3B] px-5 pt-5 pb-7 relative overflow-hidden">
-        <div className="absolute w-[140px] h-[140px] rounded-full bg-[#F4A07A] opacity-[0.09] -top-12 -right-10 pointer-events-none" />
-        <div className="absolute w-[80px] h-[80px] rounded-full bg-[#E8C9A0] opacity-[0.08] -bottom-4 left-6 pointer-events-none" />
         <div className="absolute top-6 right-6 opacity-[0.12] pointer-events-none">
           {[0, 1, 2].map(row => (
             <div key={row} className="flex gap-2.5 mb-2.5">
@@ -161,12 +127,12 @@ export default function HomePage() {
           <span className="text-xs font-semibold text-white/50">9:41</span>
           <div className="flex gap-1.5 text-white/40">
             <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor">
-              <path d="M0 3.5C0 3.22 0.22 3 0.5 3C2.75 3 8.5 0 8.5 0s5.75 3 8 3c0.28 0 0.5 0.22 0.5 0.5v5c0 0.28-0.22 0.5-0.5 0.5C14.25 9 8.5 12 8.5 12S2.75 9 0.5 9C0.22 9 0 8.78 0 8.5v-5z"/>
+              <path d="M0 3.5C0 3.22 0.22 3 0.5 3C2.75 3 8.5 0 8.5 0s5.75 3 8 3c0.28 0 0.5 0.22 0.5 0.5v5c0 0.28-0.22 0.5-0.5 0.5C14.25 9 8.5 12 8.5 12S2.75 9 0.5 9C0.22 9 0 8.78 0 8.5v-5z" />
             </svg>
             <svg width="25" height="12" viewBox="0 0 25 12" fill="currentColor">
-              <rect x="0" y="0" width="19" height="12" rx="2.5" fill="none" stroke="currentColor" strokeWidth="1"/>
-              <rect x="20" y="4" width="2" height="4" rx="0.5"/>
-              <rect x="2" y="2" width="15" height="8" rx="1"/>
+              <rect x="0" y="0" width="19" height="12" rx="2.5" fill="none" stroke="currentColor" strokeWidth="1" />
+              <rect x="20" y="4" width="2" height="4" rx="0.5" />
+              <rect x="2" y="2" width="15" height="8" rx="1" />
             </svg>
           </div>
         </div>
@@ -176,10 +142,6 @@ export default function HomePage() {
           <div className="flex-1">
             <div className="flex items-center gap-1 mb-0.5">
               <p className="text-[11px] text-white/45">Selamat pagi</p>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-[#FFC107]">
-                <circle cx="12" cy="12" r="5" fill="currentColor"/>
-                <path d="M12 1v3M12 20v3M22 12h-3M5 12H2M19.07 4.93l-2.12 2.12M7.05 16.95l-2.12 2.12M19.07 19.07l-2.12-2.12M7.05 7.05L4.93 4.93" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
             </div>
             <h1 className="text-[20px] font-bold text-white leading-none" style={{ letterSpacing: "-0.4px" }}>
               Hai, Dira!
@@ -231,7 +193,6 @@ export default function HomePage() {
             onClick={() => onNavigate("sign-camera")}
             className="w-full bg-[#1B1F3B] rounded-[18px] p-4 flex items-center gap-3.5 relative overflow-hidden"
           >
-            <div className="absolute w-24 h-24 rounded-full bg-[#F4A07A] opacity-[0.12] -right-6 -top-6 pointer-events-none" />
             <div className="absolute right-12 bottom-0 opacity-[0.06] pointer-events-none">
               <HandSignIllustration />
             </div>
@@ -241,10 +202,6 @@ export default function HomePage() {
             <div className="flex-1 text-left relative z-10">
               <div className="text-[14px] font-bold text-white mb-0.5">Terjemahkan isyarat</div>
               <div className="text-[11px] text-white/48">Arahkan kamera, mulai komunikasi</div>
-              <div className="flex items-center gap-1 mt-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#69B578]" />
-                <span className="text-[10px] text-[#69B578] font-medium">Real-time · SIBI</span>
-              </div>
             </div>
             <div className="text-lg text-white/30 relative z-10">→</div>
           </button>
@@ -276,8 +233,6 @@ export default function HomePage() {
             <div className="text-white/50 text-sm">→</div>
           </button>
         </div>
-
-        <WordOfDayCard onNavigate={onNavigate} />
 
         {/* Recently learned */}
         <div>
