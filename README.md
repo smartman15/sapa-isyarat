@@ -1,6 +1,6 @@
 # Sapa Isyarat 🤟
 
-Sapa Isyarat is a real-time sign language gesture recognition application built to translate **SIBI** (Sistem Isyarat Bahasa Indonesia) and **BISINDO** (Bahasa Isyarat Indonesia) alphabets into text using a webcam.
+Sapa Isyarat is a real-time sign language gesture recognition application built to translate **SIBI** (Sistem Isyarat Bahasa Indonesia) and alphabets into text using a webcam.
 
 The system uses a hybrid architecture:
 1. **Frontend (Browser):** Next.js with React captures webcam frames and uses MediaPipe's lightweight Tasks API to extract 3D hand landmarks in real-time.
@@ -86,7 +86,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 🧠 Training Custom Models
 
-The repository comes with the code required to train your own SIBI or BISINDO alphabets using custom image datasets.
+The repository comes with the code required to train your own SIBI alphabets using custom image datasets.
 
 ### Prerequisites for Dataset
 You need a folder containing subfolders for each label (e.g., A, B, C...).
@@ -123,7 +123,7 @@ Train the Random Forest model on the generated CSV file.
 # Ensure the --dataset path points EXACTLY to the file generated in Step 1
 .\venv\Scripts\python.exe scripts/train_model.py --mode sibi --dataset data/sibi_landmarks.csv
 ```
-*(Replace `--mode sibi` with `--mode bisindo` if training BISINDO)*
+
 
 The script will evaluate the model, output a precision/recall report, and automatically save the trained model to `backend/app/ai/models/`.
 
