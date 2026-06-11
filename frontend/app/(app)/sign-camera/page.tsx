@@ -32,7 +32,6 @@ export default function SignCameraPage() {
   const [confidence, setConfidence] = useState<number>(0);
   const [status, setStatus]         = useState<string>("Memulai kamera...");
   const [isDetecting, setIsDetecting] = useState<boolean>(false);
-  const [handPoints, setHandPoints] = useState<{ x: number; y: number }[]>([]);
   const [copied, setCopied]         = useState<boolean>(false);
   const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
 
@@ -50,9 +49,8 @@ export default function SignCameraPage() {
   /* ── Per-frame landmark handler → POST to backend ── */
   const handleLandmarks = useCallback(
     async (hands: LandmarkPoint[][]) => {
-      // Show tracking dots from first hand landmarks (normalised 0-1)
+      // Trigger detection state
       if (hands[0]) {
-        setHandPoints(hands[0].map((p) => ({ x: p.x * 100, y: p.y * 100 })));
         setIsDetecting(true);
       }
 
@@ -110,7 +108,6 @@ export default function SignCameraPage() {
     setLastLabel("");
     setConfidence(0);
     setIsDetecting(false);
-    setHandPoints([]);
     reset();
   };
 
@@ -215,23 +212,6 @@ export default function SignCameraPage() {
 
             {/* Center guide ring */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 border-2 border-dashed border-white/30 rounded-full" />
-
-            {/* Live landmark dots (from real MediaPipe data) */}
-            {handPoints.slice(0, 21).map((point, idx) => (
-              <div
-                key={idx}
-                className="absolute w-2 h-2 bg-[#F4A07A] rounded-full"
-                style={{
-                  left:           `${point.x}%`,
-                  top:            `${point.y}%`,
-                  opacity:        isDetecting ? 1 : 0,
-                  transition:     "opacity 0.2s, left 0.05s, top 0.05s",
-                  boxShadow:      "0 0 6px #F4A07A",
-                  transform:      "translate(-50%, -50%)",
-                  animationDelay: `${idx * 0.02}s`,
-                }}
-              />
-            ))}
           </div>
         </div>
 

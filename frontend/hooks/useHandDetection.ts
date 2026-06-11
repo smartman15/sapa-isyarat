@@ -100,7 +100,7 @@ export function useHandDetection(
               ctx.clearRect(0, 0, canvas.width, canvas.height);
               ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-              // Draw green landmark dots on detected hands
+              // Draw landmark dots on detected hands in the app's peach color
               if (results.landmarks) {
                 for (const hand of results.landmarks) {
                   for (const point of hand) {
@@ -112,7 +112,7 @@ export function useHandDetection(
                       0,
                       2 * Math.PI
                     );
-                    ctx.fillStyle = "#00FF00";
+                    ctx.fillStyle = "#F4A07A";
                     ctx.fill();
                   }
                 }
