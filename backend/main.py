@@ -8,6 +8,9 @@ from app.api.routes import gesture
 from app.api.routes import stt
 from app.services.model_service import load_models
 from app.services.stt_service import load_whisper_model
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning, module="sklearn")
+
 
 
 @asynccontextmanager
