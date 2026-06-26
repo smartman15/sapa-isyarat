@@ -1,6 +1,6 @@
 # Sapa Isyarat 🤟
 
-Sapa Isyarat is a real-time sign language gesture recognition application built to translate **SIBI** (Sistem Isyarat Bahasa Indonesia) and alphabets into text using a webcam.
+Sapa Isyarat is a real-time sign language gesture recognition application built to translate **SIBI** (Sistem Isyarat Bahasa Indonesia) alphabet gestures into text using a webcam.
 
 The system uses a hybrid architecture:
 1. **Frontend (Browser):** Next.js with React captures webcam frames and uses MediaPipe's lightweight Tasks API to extract 3D hand landmarks in real-time.
@@ -41,6 +41,14 @@ sapa-isyarat/
 
 ## 🚀 Getting Started
 
+### Prerequisites
+
+Before you begin, make sure you have the following installed:
+
+- **Python 3.13** — [python.org/downloads](https://www.python.org/downloads/)
+- **Node.js 18+** — [nodejs.org](https://nodejs.org/)
+- **Git** — [git-scm.com](https://git-scm.com/)
+
 You need **two terminal windows** to run the application (one for the backend, one for the frontend).
 
 ### 1. Backend Setup (Terminal 1)
@@ -75,8 +83,25 @@ cd frontend
 
 # Install Node modules
 npm install
+```
 
-# Start the Next.js development server
+**Configure environment variables (required):**
+
+The frontend needs to know where the backend is running. Run these commands **from inside the `frontend/` directory** (i.e., after the `cd frontend` step above):
+
+```powershell
+# Windows (PowerShell) — run from inside frontend/
+Copy-Item .env.example .env.local
+
+# macOS / Linux — run from inside frontend/
+cp .env.example .env.local
+```
+
+> **Note:** `.env.local` is gitignored and must be created on every machine that clones this repo. Without it, the app will still attempt to connect to `http://127.0.0.1:8000` as a fallback, but it is best practice to have the file present.
+
+Start the development server:
+
+```powershell
 npm run dev
 ```
 
@@ -142,3 +167,8 @@ Restart the FastAPI server so it picks up the newly generated `.joblib` model fi
 
 **ModuleNotFoundError: No module named 'cv2' in VS Code**
 - This is just VS Code using the wrong Python interpreter for linting. Press `Ctrl+Shift+P` -> `Python: Select Interpreter` -> choose `./venv/Scripts/python.exe`.
+
+**"⚠️ Backend tidak dapat dijangkau" / gestures not translating**
+- Make sure the backend is running on port 8000 before opening the frontend.
+- Check that `frontend/.env.local` exists. If it doesn't, run `Copy-Item .env.example .env.local` (Windows) or `cp .env.example .env.local` (macOS/Linux) from the `frontend/` directory.
+
