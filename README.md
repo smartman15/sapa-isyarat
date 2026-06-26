@@ -48,6 +48,16 @@ Before you begin, make sure you have the following installed:
 - **Python 3.13** — [python.org/downloads](https://www.python.org/downloads/)
 - **Node.js 18+** — [nodejs.org](https://nodejs.org/)
 - **Git** — [git-scm.com](https://git-scm.com/)
+- **ffmpeg** *(required for Speech-to-Text)* — [ffmpeg.org/download](https://ffmpeg.org/download.html)
+
+  On Windows, the easiest way to install ffmpeg is via [winget](https://learn.microsoft.com/en-us/windows/package-manager/):
+  ```powershell
+  winget install ffmpeg
+  ```
+  After installing, **restart your terminal** so the PATH is updated, then verify with:
+  ```powershell
+  ffmpeg -version
+  ```
 
 You need **two terminal windows** to run the application (one for the backend, one for the frontend).
 
@@ -168,7 +178,11 @@ Restart the FastAPI server so it picks up the newly generated `.joblib` model fi
 **ModuleNotFoundError: No module named 'cv2' in VS Code**
 - This is just VS Code using the wrong Python interpreter for linting. Press `Ctrl+Shift+P` -> `Python: Select Interpreter` -> choose `./venv/Scripts/python.exe`.
 
-**"⚠️ Backend tidak dapat dijangkau" / gestures not translating**
+**"Transcription failed: [WinError 2] The system cannot find the file specified"**
+- `ffmpeg` is not installed or not on your system PATH. The Whisper model uses `ffmpeg` internally to decode audio files.
+- Install it with `winget install ffmpeg`, then **restart your terminal** and verify with `ffmpeg -version`.
+- On macOS: `brew install ffmpeg`. On Linux: `sudo apt install ffmpeg`.
+
 - Make sure the backend is running on port 8000 before opening the frontend.
 - Check that `frontend/.env.local` exists. If it doesn't, run `Copy-Item .env.example .env.local` (Windows) or `cp .env.example .env.local` (macOS/Linux) from the `frontend/` directory.
 
