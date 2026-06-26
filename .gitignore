@@ -1,0 +1,55 @@
+# =============================================
+# SAPA ISYARAT — Root .gitignore
+# =============================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# --- Virtual Environments ---
+venv/
+.venv/
+env/
+ENV/
+
+# --- Environment Variables (NEVER commit secrets) ---
+.env
+.env.*
+!.env.example
+
+# --- Backend: ML model cache ---
+backend/app/ai/models/*.joblib
+backend/whisper_cache/
+
+# --- Node.js / Next.js ---
+node_modules/
+.next/
+out/
+.vercel/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- IDE ---
+.vscode/settings.json
+.idea/
+
+# --- Logs ---
+*.log
+npm-debug.log*
+
+# --- TypeScript build cache ---
+*.tsbuildinfo
+
+# --- Compiled Python bytecode (redundant with __pycache__ but explicit) ---
+*.pyc
